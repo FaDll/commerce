@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Won Listings</h2>
+
+    <ul style="list-style-type:none;">
+        {% if Wonitems  %}
+
+        <div class="alert alert-success" role="alert">
+            Congratulations Bro you Won the Bid!!!
+          </div>
+
+            <div style="border: 1px solid lightgray; margin: 50px; padding: 20px; border-radius: 10px;">
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td style="width:40px;">
+                            {% for wonitem in Wonitems %}
+                                <img src="{{ wonitem.listingID.image_url }}" style="width:80%;"/>
+                            </td>
+                            <td style="width: 60%;"  valign="top" >
+                                
+                                <h5>{{ wonitem.listingID.title }}</h5>
+                                <div>{{ wonitem.listingID.description }}</div>
+                                <div>Bid: ${{ wonitem.listingID.price }}</div>
+                                <div>Listed by: {{ wonitem.listingID.userid }}</div>
+                            </td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
+                            {% endfor %}    
+        {% else %} 
+            <h2> you dont have any won items yet!</h2> 
+        {% endif %}
+    
+{% endblock %}

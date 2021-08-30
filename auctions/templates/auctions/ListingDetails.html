@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+
+
+<h2>Listing Details : </h2>
+
+<table style="width: 100%;">
+    <tbody>
+        <tr>
+            <td style="width:40px;">
+                <h5>{{ listing.title }}</h5> 
+                <img src="{{ listing.image_url }}" style="width:90%;"/>
+            </td>
+            <td style="width: 60%;">
+                <div>{{ listing.description }}</div>
+
+                <form action="{% url 'bidding' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <div>Bid: $ <input type="number" min="{{ listing.price }}" step="0.001" name="bid" placeholder="{{ listing.price }}">
+                    <input type="submit" class="btn btn-primary"> </div>
+                    {% if owner == listing.userid %}
+                    <a href="{% url 'Close_bidding' listing.id %}"><button type="button" class="btn btn-success">Close Bidding</button></a>
+                    {% endif %}    
+                </form>
+
+                <br>
+                <div class="checkbox" >
+                    {% if watching == False %}
+                        <a href="{% url 'AddToWatchList' listing.id %}">Add To WatchList</a>
+                    {% elif watching == True  %}
+                        <a href="{% url 'RemoveFromWatchList' listing.id %}">Remove From watchlist </a>
+                    {% else %}
+                        <a href="{% url 'AddToWatchList' listing.id %}">Add To WatchList</a>
+                    {% endif %}
+                </div>
+
+{% endblock %}
